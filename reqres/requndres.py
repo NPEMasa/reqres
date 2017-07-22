@@ -9,60 +9,75 @@ param_b = param / 2
 headers, res = "", "";
 URL = sys.argv[param]
 
-class function:
-    URL = sys.argv[param]
-    def help(self):
+class help:
+    def msg(self):
+	help = """
++--------------+
+| Command help |
++--------------+
 
-        print "+-------------+"
-        print "|Command Usage|"
-        print "+-------------+"
-        print ""
-        print "-v  : This Program Version"
-        print ""
-        print "-u <UA-code> : User-Agent prefix"
-	print ""
-        print "   <UA-code>"
-        print "   a6   : android 6.x"
-        print "   a7   : android 7.x"
-        print "   s    : safari"
-        print "   c    : chrome"
-        print "   i    : InternetExplorer"
-        print "   f    : FireFox"
-	print ""
+-v  : This Program Version
 
-    def request(self, res):
-	self.res = requests.get(URL, headers=self.headers)
-	self.restxt = self.res.text
+-u <UA-code> : User-Agent prefix
 
-    def response(self):
+<UA-code>
+a6   : android 6.x
+a7   : android 7.x
+s    : Apple Safari
+c    : Google Chrome
+i    : Internet Explorer
+f    : Mozzila FireFox
+
+[User-Agent Usage]
+$ python requndres.py -u s http://example.com/
+$ python requndres.py -u i http://example.com/
+
+"""
+	print help
+
+class reqres():
+    def request(self):
+	u = Useragent()
+	headers = u.UA()
+	self.res = requests.get(URL, headers=headers)
+	self.res_txt = self.res.text
+
+    def res_state(self):
 	return self.res
 
-    def responsetxt(self):
-	return self.restxt
+    def res_txt(self):
+	return self.res_txt
 
-    def UA(self, headers):
-        self.headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko'}
+class Useragent:
+    URL = sys.argv[param]
+    def UA(self):
+	if sys.argv[2] == "a6":
+	    self.headers = {'User-Agent': 'Mozilla/5.0 (Linux; U; Android 6.0.1; ja-jp; Nexus 6P) AppleWebKit/533.1 (KHTML, like Gecko) Version/6.0 Mobile Safari/533.1'}
+	elif sys.argv[2] == "a7":
+	    self.headers = {'User-Agent': 'Mozilla/5.0 (Linux; U; Android 7.0; ja-jp; Nexus 6P) AppleWebKit/533.1 (KHTML, like Gecko) Version/6.0 Mobile Safari/533.1'}
+	elif sys.argv[2] == "s":
+	    self.headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/600.8.9 (KHTML, like Gecko) Version/8.0.8 Safari/600.8.9'}
+	elif sys.argv[2] == "c":
+	    self.headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.99 Safari/537.36'}
+	elif sys.argv[2] == "i":
+	    self.headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64; Trident/7.0; rv:11.0) like Gecko'}
+	elif sys.argv[2] == "f":
+	    self.headers = {'User-Agent': 'Mozilla/5.0 (platform; rv:geckoversion) Gecko/20100101 Firefox/firefoxversion'}
 
-    def main(self):
+def main():
+    if sys.argv[1] == "-u":
+        global r, u
+	r = reqres()
+	u = Useragent()
         print "[*]Starting GET Request Process..."
-        if sys.argv[1] == "-u":
-            self.UA(self)
-            self.request(self)
-	    print self.response()
-	    print self.responsetxt()
-        elif sys.argv[1] == "-s":
-            sub1()
-        elif sys.argv[1] == "-h":
-            fnc.help()
+        u.UA()
+        r.request()
+        print (r.res_txt.encode('utf-8'))
 
-    def sub1():
-        print sys.argv[param]
-        if param_a == 1:
-            print "True!"
-            print param_b
-        else:
-            print "False"
+    elif sys.argv[1] == "-h":
+        global h 
+	h = help()
+        h.msg()
 
 if __name__ == '__main__':
-    m = function()
-    m.main()
+    main()
