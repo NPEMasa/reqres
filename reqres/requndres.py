@@ -9,7 +9,7 @@ param_b = param / 2
 headers, res = "", "";
 URL = sys.argv[param]
 
-class help:
+class reqres():
     def msg(self):
 	help = """
 +--------------+
@@ -35,10 +35,8 @@ $ python requndres.py -u i http://example.com/
 """
 	print help
 
-class reqres():
     def request(self):
-	u = Useragent()
-	headers = u.UA()
+	headers = r.UA()
 	self.res = requests.get(URL, headers=headers)
 	self.res_txt = self.res.text
 
@@ -48,8 +46,7 @@ class reqres():
     def res_txt(self):
 	return self.res_txt
 
-class Useragent:
-    URL = sys.argv[param]
+    #URL = sys.argv[param]
     def UA(self):
 	if sys.argv[2] == "a6":
 	    self.headers = {'User-Agent': 'Mozilla/5.0 (Linux; U; Android 6.0.1; ja-jp; Nexus 6P) AppleWebKit/533.1 (KHTML, like Gecko) Version/6.0 Mobile Safari/533.1'}
@@ -66,18 +63,15 @@ class Useragent:
 
 def main():
     if sys.argv[1] == "-u":
-        global r, u
+        global r
 	r = reqres()
-	u = Useragent()
         print "[*]Starting GET Request Process..."
-        u.UA()
+        r.UA()
         r.request()
         print (r.res_txt.encode('utf-8'))
 
     elif sys.argv[1] == "-h":
-        global h 
-	h = help()
-        h.msg()
+        r.msg()
 
 if __name__ == '__main__':
     main()
