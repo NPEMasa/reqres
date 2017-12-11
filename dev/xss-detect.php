@@ -12,11 +12,9 @@ if(!empty($_POST['str'])){
   $tag  = preg_match($ptn1, $str);
   if($type !== false){
 	preg_match_all($ptn2, $str, $match1);
-	print count($match1[1]);
   }
   if($tag !== false){
 	preg_match_all($ptn3, $str, $match2);
-	print count($match2[1]);
   }
     
 
