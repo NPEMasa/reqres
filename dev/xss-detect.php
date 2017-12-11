@@ -5,7 +5,6 @@ if(!empty($_POST['str'])){
   $ptn1 = '/">/s'; //tag based xss
   $ptn2 = '/"\ on([^=]*)/s';
   $ptn3 = '/<([^>]*)>/s';
-  //print (count($match2[1]));
 
   //ptn0 = type based xss match
   $type = preg_match($ptn0, $str);
@@ -14,12 +13,10 @@ if(!empty($_POST['str'])){
   if($type !== false){
 	preg_match_all($ptn2, $str, $match1);
 	print count($match1[1]);
-	echo "<br><br>";
   }
   if($tag !== false){
 	preg_match_all($ptn3, $str, $match2);
 	print count($match2[1]);
-	echo "<br><br>";
   }
     
 
@@ -41,9 +38,9 @@ if(!empty($_POST['str'])){
   </form>
 
 <?php if(!empty($_POST['str'])){$str1 = htmlspecialchars($str); echo "<h3>input data:<pre><code>$str1</code></pre></h3>"; } ?>
-<?php if(!empty($_POST['str'])){if(count($match1[1]) >= 1){echo "<h3>detect type based signature:<pre><code>"; print_r($match1); echo "</code></pre></h3>"; }} ?>
+<?php if(!empty($_POST['str'])){if(count($match1[1]) >= 1){echo "<h3>detect type based signature:<pre><code>"; print_r($match1[1]); echo "</code></pre></h3>"; }} ?>
 <br>
-<?php if(!empty($_POST['str'])){if(count($match2[1]) >= 1){echo "<h3>detect  tag based signature:<pre><code>"; print_r($match2); echo "</code></pre></h3>"; }} ?>
+<?php if(!empty($_POST['str'])){if(count($match2[1]) >= 1){echo "<h3>detect  tag based signature:<pre><code>"; print_r($match2[1]); echo "</code></pre></h3>"; }} ?>
 </body>
 </html>
 
